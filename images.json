@@ -1,98 +1,10 @@
-[
-    {
-        "id": "img_001",
-        "name": "Luxury Sofa Promo",
-        "category": "Furniture",
-        "filename": "sofa_blue.png",
-        "tags": ["promo", "blue", "living-room"],
-        "date": "2024-04-09"
-    },
-    {
-        "id": "img_002",
-        "name": "Dining Table Set",
-        "category": "Furniture",
-        "filename": "dining_set.png",
-        "tags": ["modern", "wood"],
-        "date": "2024-04-08"
-    },
-    {
-        "id": "img_003",
-        "name": "Office Chair Ergonomic",
-        "category": "Office",
-        "filename": "office_chair.png",
-        "tags": ["office", "black", "work"],
-        "date": "2024-04-07"
-    },
-    {
-        "id": "img_004",
-        "name": "Smart Coffee Table",
-        "category": "Furniture",
-        "filename": "coffee_table.png",
-        "tags": ["tech", "white"],
-        "date": "2024-04-06"
-    },
-    {
-        "id": "img_005",
-        "name": "Mountain Sunrise",
-        "category": "Nature",
-        "filename": "mountain.png",
-        "tags": ["nature", "outdoor", "landscape"],
-        "date": "2024-04-10"
-    },
-    {
-        "id": "img_006",
-        "name": "Forest Path",
-        "category": "Nature",
-        "filename": "forest.png",
-        "tags": ["green", "trees"],
-        "date": "2024-04-11"
-    },
-    {
-        "id": "img_007",
-        "name": "Standing Desk",
-        "category": "Office",
-        "filename": "standing_desk.png",
-        "tags": ["office", "health", "desk"],
-        "date": "2024-04-12"
-    },
-    {
-        "id": "img_008",
-        "name": "Oak Bookshelf",
-        "category": "Furniture",
-        "filename": "bookshelf.png",
-        "tags": ["wood", "classic", "storage"],
-        "date": "2024-04-13"
-    },
-    {
-        "id": "img_009",
-        "name": "Tropical Beach",
-        "category": "Nature",
-        "filename": "beach.png",
-        "tags": ["sea", "summer", "sand"],
-        "date": "2024-04-14"
-    },
-    {
-        "id": "img_010",
-        "name": "Dual Monitor Setup",
-        "category": "Office",
-        "filename": "monitors.png",
-        "tags": ["gaming", "work", "tech"],
-        "date": "2024-04-15"
-    },
-    {
-        "id": "img_011",
-        "name": "Velvet Armchair",
-        "category": "Furniture",
-        "filename": "armchair.png",
-        "tags": ["luxury", "red", "living-room"],
-        "date": "2024-04-16"
-    },
-    {
-        "id": "img_012",
-        "name": "Waterfall Mist",
-        "category": "Nature",
-        "filename": "waterfall.png",
-        "tags": ["water", "nature", "peace"],
-        "date": "2024-04-17"
-    }
-]
+﻿{
+    "id":  "img_5330",
+    "name":  "Aws Level",
+    "category":  "Uncategorized",
+    "filename":  "aws-level.jpg",
+    "tags":  [
+                 "new"
+             ],
+    "date":  "2026-04-10"
+}
