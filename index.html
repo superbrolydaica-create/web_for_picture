@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoPic Hub | Cloudflare Image Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-area">
+            <div class="logo-icon">AP</div>
+            <div class="logo-text">
+                <h1>AutoPic Hub</h1>
+                <span>Cloud Manager</span>
+            </div>
+        </div>
+
+        <nav class="nav-section">
+            <span class="nav-label">Main Menu</span>
+            <ul class="nav-group">
+                <li><a href="#" class="nav-item active"><i data-lucide="layout-grid"></i> <span>All Assets</span></a></li>
+                <li><a href="#" class="nav-item"><i data-lucide="folder"></i> <span>Categories</span></a></li>
+                <li><a href="#" class="nav-item"><i data-lucide="heart"></i> <span>Favorites</span></a></li>
+            </ul>
+
+            <span class="nav-label">System</span>
+            <ul class="nav-group">
+                <li><a href="#" class="nav-item"><i data-lucide="settings"></i> <span>Settings</span></a></li>
+                <li><a href="#" class="nav-item"><i data-lucide="help-circle"></i> <span>Help Docs</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        <header>
+            <div class="header-search">
+                <i data-lucide="search"></i>
+                <input type="text" id="searchInput" placeholder="Search images by name, tag or category...">
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="refreshBtn">
+                    <i data-lucide="refresh-cw"></i> Sync Now
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalImages">0</div>
+                <div class="stat-label">Total Images</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalCategories">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">Cloud</div>
+                <div class="stat-label">Status: Active</div>
+            </div>
+        </div>
+
+        <!-- Gallery -->
+        <section class="gallery-container">
+            <div class="gallery-header">
+                <h2>Asset Gallery</h2>
+                <div class="filter-group">
+                    <!-- Filters can be dynamic -->
+                </div>
+            </div>
+
+            <div class="image-grid" id="imageGrid">
+                <!-- Skeleton or Loader could go here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container">
+        <div class="toast" id="toast">
+            <i data-lucide="check-circle"></i>
+            <span id="toastMsg">Link copied to clipboard!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
