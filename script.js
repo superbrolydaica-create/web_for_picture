@@ -8,37 +8,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const refreshBtn = document.getElementById('refreshBtn');
 
     let allImages = [];
-    let currentSource = 'images.json';
+    let currentCategory = 'all';
 
     // Configuration
     const BASE_URL = window.location.origin + '/images/'; 
+    const SOURCE_FILE = 'images.json';
 
     // Fetch Images Data
-    async function fetchImages(sourceFile = currentSource) {
+    async function fetchImages() {
         try {
             // Show loading state
             imageGrid.innerHTML = `
                 <div style="grid-column: 1/-1; text-align: center; padding: 100px;">
                     <i data-lucide="loader-2" class="spinning" style="width: 40px; height: 40px; color: var(--primary);"></i>
-                    <p style="margin-top: 15px; color: var(--text-muted);">Syncing assets from ${sourceFile}...</p>
+                    <p style="margin-top: 15px; color: var(--text-muted);">Syncing assets from database...</p>
                 </div>
             `;
             lucide.createIcons();
 
-            const response = await fetch(sourceFile);
+            const response = await fetch(SOURCE_FILE);
             if (!response.ok) throw new Error('Failed to fetch images list');
             
             allImages = await response.json();
-            currentSource = sourceFile;
             
-            renderGallery(allImages);
+            filterAndRender(currentCategory);
             updateStats(allImages);
         } catch (error) {
             console.error('Error:', error);
             imageGrid.innerHTML = `
                 <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">
                     <i data-lucide="alert-circle" style="width: 40px; height: 40px; margin-bottom: 15px;"></i>
-                    <p>Error loading "${sourceFile}". Please ensure the file exists.</p>
+                    <p>Error loading image database. Please ensure "${SOURCE_FILE}" exists and is valid JSON.</p>
                 </div>
             `;
             lucide.createIcons();
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Sidebar Navigation Logic
-    const navItems = document.querySelectorAll('.nav-item[data-source]');
+    const navItems = document.querySelectorAll('.nav-item[data-category]');
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
@@ -55,17 +55,36 @@ document.addEventListener('DOMContentLoaded', () => {
             navItems.forEach(nav => nav.classList.remove('active'));
             item.classList.add('active');
             
-            // Load new source
-            const source = item.dataset.source;
-            fetchImages(source);
+            // Filter by category
+            currentCategory = item.dataset.category;
+            filterAndRender(currentCategory);
         });
     });
+
+    function filterAndRender(category) {
+        let filtered = allImages;
+        if (category !== 'all') {
+            filtered = allImages.filter(img => img.category === category);
+        }
+        
+        // Also apply search if there's text in search input
+        const searchTerm = searchInput.value.toLowerCase();
+        if (searchTerm) {
+            filtered = filtered.filter(img => 
+                img.name.toLowerCase().includes(searchTerm) || 
+                img.category.toLowerCase().includes(searchTerm) ||
+                img.tags.some(t => t.toLowerCase().includes(searchTerm))
+            );
+        }
+
+        renderGallery(filtered);
+    }
 
     function renderGallery(images) {
         imageGrid.innerHTML = '';
         
         if (images.length === 0) {
-            imageGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">No matching images found.</p>`;
+            imageGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">No images found in this view.</p>`;
             return;
         }
 
@@ -136,19 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    searchInput.addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
-        const filtered = allImages.filter(img => 
-            img.name.toLowerCase().includes(term) || 
-            img.category.toLowerCase().includes(term) ||
-            img.tags.some(t => t.toLowerCase().includes(term))
-        );
-        renderGallery(filtered);
+    searchInput.addEventListener('input', () => {
+        filterAndRender(currentCategory);
     });
 
     refreshBtn.addEventListener('click', () => {
         refreshBtn.classList.add('spinning');
-        fetchImages(currentSource).then(() => {
+        fetchImages().then(() => {
             showToast('Gallery synchronized!');
             setTimeout(() => refreshBtn.classList.remove('spinning'), 1000);
         });
