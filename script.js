@@ -8,24 +8,58 @@ document.addEventListener('DOMContentLoaded', () => {
     const refreshBtn = document.getElementById('refreshBtn');
 
     let allImages = [];
+    let currentSource = 'images.json';
 
     // Configuration
-    // In production, this would be your Cloudflare Pages URL
     const BASE_URL = window.location.origin + '/images/'; 
 
     // Fetch Images Data
-    async function fetchImages() {
+    async function fetchImages(sourceFile = currentSource) {
         try {
-            const response = await fetch('images.json');
+            // Show loading state
+            imageGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 100px;">
+                    <i data-lucide="loader-2" class="spinning" style="width: 40px; height: 40px; color: var(--primary);"></i>
+                    <p style="margin-top: 15px; color: var(--text-muted);">Syncing assets from ${sourceFile}...</p>
+                </div>
+            `;
+            lucide.createIcons();
+
+            const response = await fetch(sourceFile);
             if (!response.ok) throw new Error('Failed to fetch images list');
+            
             allImages = await response.json();
+            currentSource = sourceFile;
+            
             renderGallery(allImages);
             updateStats(allImages);
         } catch (error) {
             console.error('Error:', error);
-            imageGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">Error loading assets. Please ensure images.json exists.</p>`;
+            imageGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 50px;">
+                    <i data-lucide="alert-circle" style="width: 40px; height: 40px; margin-bottom: 15px;"></i>
+                    <p>Error loading "${sourceFile}". Please ensure the file exists.</p>
+                </div>
+            `;
+            lucide.createIcons();
         }
     }
+
+    // Sidebar Navigation Logic
+    const navItems = document.querySelectorAll('.nav-item[data-source]');
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Update UI active state
+            navItems.forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
+            
+            // Load new source
+            const source = item.dataset.source;
+            fetchImages(source);
+        });
+    });
 
     function renderGallery(images) {
         imageGrid.innerHTML = '';
@@ -40,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'image-card gallery-item';
             card.style.animationDelay = `${index * 0.05}s`;
             
-            // Full public URL
             const publicUrl = BASE_URL + img.filename;
 
             card.innerHTML = `
@@ -66,10 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
             imageGrid.appendChild(card);
         });
 
-        // Initialize icons for new elements
         lucide.createIcons();
 
-        // Attach Copy Event
         document.querySelectorAll('.copy-btn').forEach(btn => {
             btn.onclick = () => copyToClipboard(btn.dataset.url);
         });
@@ -87,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast('Link copied to clipboard!');
         } catch (err) {
             console.error('Failed to copy:', err);
-            // Fallback for non-HTTPS or other issues
             const el = document.createElement('textarea');
             el.value = text;
             document.body.appendChild(el);
@@ -106,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // Search Logic
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
         const filtered = allImages.filter(img => 
@@ -117,15 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
         renderGallery(filtered);
     });
 
-    // Refresh Logic (Manual Sync Simulation)
     refreshBtn.addEventListener('click', () => {
-        refreshBtn.classList.add('spinning'); // Add CSS for this if needed
-        fetchImages().then(() => {
+        refreshBtn.classList.add('spinning');
+        fetchImages(currentSource).then(() => {
             showToast('Gallery synchronized!');
             setTimeout(() => refreshBtn.classList.remove('spinning'), 1000);
         });
     });
 
-    // Initial Load
     fetchImages();
 });

@@ -1,0 +1,18 @@
+[
+    {
+        "id": "img_005",
+        "name": "Mountain Sunrise",
+        "category": "Nature",
+        "filename": "mountain.png",
+        "tags": ["nature", "outdoor", "landscape"],
+        "date": "2024-04-10"
+    },
+    {
+        "id": "img_006",
+        "name": "Forest Path",
+        "category": "Nature",
+        "filename": "forest.png",
+        "tags": ["green", "trees"],
+        "date": "2024-04-11"
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "id": "img_001",
+        "name": "Luxury Sofa Promo",
+        "category": "Furniture",
+        "filename": "sofa_blue.png",
+        "tags": ["promo", "blue", "living-room"],
+        "date": "2024-04-09"
+    },
+    {
+        "id": "img_002",
+        "name": "Dining Table Set",
+        "category": "Furniture",
+        "filename": "dining_set.png",
+        "tags": ["modern", "wood"],
+        "date": "2024-04-08"
+    },
+    {
+        "id": "img_004",
+        "name": "Smart Coffee Table",
+        "category": "Furniture",
+        "filename": "coffee_table.png",
+        "tags": ["tech", "white"],
+        "date": "2024-04-06"
+    }
+]

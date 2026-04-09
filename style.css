@@ -407,6 +407,15 @@ header {
   animation: fadeIn 0.5s ease backwards;
 }
 
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .sidebar {
